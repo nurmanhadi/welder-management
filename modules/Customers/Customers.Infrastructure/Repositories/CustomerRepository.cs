@@ -4,7 +4,7 @@ using Dapper;
 
 namespace Customers.Infrastructure.Repositories;
 
-public class CustomerRepository(IConnFactory connFactory) : ICustomerRepository
+public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICustomerRepository
 {
     public async Task AddAsync(Customer entity)
     {
@@ -19,7 +19,7 @@ public class CustomerRepository(IConnFactory connFactory) : ICustomerRepository
             Phone = entity.Phone,
             Address = entity.Address,
         };
-        using var conn = connFactory.CustomerConnect();
+        using var conn = connFactory.CustomerCreateConnection();
         await conn.ExecuteAsync(sql, parameters);
     }
 
@@ -34,7 +34,7 @@ public class CustomerRepository(IConnFactory connFactory) : ICustomerRepository
         {
             Id = id
         };
-        using var conn = connFactory.CustomerConnect();
+        using var conn = connFactory.CustomerCreateConnection();
         var result = await conn.ExecuteScalarAsync<int>(sql, parameters);
         return result;
     }
@@ -50,7 +50,7 @@ public class CustomerRepository(IConnFactory connFactory) : ICustomerRepository
         {
             Phone = phone
         };
-        using var conn = connFactory.CustomerConnect();
+        using var conn = connFactory.CustomerCreateConnection();
         var result = await conn.ExecuteScalarAsync<int>(sql, parameters);
         return result;
     }
@@ -67,7 +67,7 @@ public class CustomerRepository(IConnFactory connFactory) : ICustomerRepository
             DeletedAt = DateTime.UtcNow,
             Id = id
         };
-        using var conn = connFactory.CustomerConnect();
+        using var conn = connFactory.CustomerCreateConnection();
         await conn.ExecuteAsync(sql, parameters);
     }
 
@@ -82,7 +82,7 @@ public class CustomerRepository(IConnFactory connFactory) : ICustomerRepository
         {
             Id = id
         };
-        using var conn = connFactory.CustomerConnect();
+        using var conn = connFactory.CustomerCreateConnection();
         var result = await conn.QueryFirstOrDefaultAsync<Customer>(sql, parameters);
         return result;
     }
@@ -101,7 +101,7 @@ public class CustomerRepository(IConnFactory connFactory) : ICustomerRepository
             Phone = entity.Phone,
             Address = entity.Address,
         };
-        using var conn = connFactory.CustomerConnect();
+        using var conn = connFactory.CustomerCreateConnection();
         await conn.ExecuteAsync(sql, parameters);
     }
 }
