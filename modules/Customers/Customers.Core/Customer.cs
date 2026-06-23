@@ -1,6 +1,10 @@
-﻿namespace Customers.Core;
+﻿using Shared.Abstractions;
 
-public class Customer
+namespace Customers.Core;
+
+public class Customer : BaseEntity
 {
-
+    public string Name { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
 }
