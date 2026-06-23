@@ -8,5 +8,6 @@
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/Shared/Shared.csproj" />
+    <Project Path="src/Welder.Api/Welder.Api.csproj" />
   </Folder>
 </Solution>
