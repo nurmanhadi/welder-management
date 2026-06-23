@@ -5,7 +5,7 @@ namespace Customers.Infrastructure.Data;
 
 public class CustomerConnection(string connectionString) : ICustomerConnectionFactory
 {
-    public IDbConnection CustomerConnect()
+    public IDbConnection CustomerCreateConnection()
     {
         return new MySqlConnection(connectionString);
     }
