@@ -4,5 +4,5 @@ namespace Shared.Responses;
 
 public record ApiResponse<T>(
     [property: JsonPropertyName("message")] string Message,
-    [property: JsonPropertyName("data")] T Data
+    [property: JsonPropertyName("data")] T? Data
 );
