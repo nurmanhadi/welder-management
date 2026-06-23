@@ -1,10 +1,10 @@
 <Solution>
   <Folder Name="/modules/" />
-  <Folder Name="/modules/Consumers/">
-    <Project Path="modules/Consumers/Consumers.Client/Consumers.Client.csproj" />
-    <Project Path="modules/Consumers/Consumers.Core/Consumers.Core.csproj" />
-    <Project Path="modules/Consumers/Consumers.Endpoint/Consumers.Endpoint.csproj" />
-    <Project Path="modules/Consumers/Consumers.Infrastructure/Consumers.Infrastructure.csproj" />
+  <Folder Name="/modules/Customers/">
+    <Project Path="modules/Customers/Customers.Client/Customers.Client.csproj" />
+    <Project Path="modules/Customers/Customers.Core/Customers.Core.csproj" />
+    <Project Path="modules/Customers/Customers.Endpoints/Customers.Endpoints.csproj" />
+    <Project Path="modules/Customers/Customers.Infrastructure/Customers.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/Shared/Shared.csproj" />
