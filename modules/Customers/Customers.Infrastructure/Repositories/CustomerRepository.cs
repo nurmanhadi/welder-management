@@ -39,6 +39,22 @@ public class CustomerRepository(IConnFactory connFactory) : ICustomerRepository
         return result;
     }
 
+    public async Task<int> CountByPhoneAsync(string phone)
+    {
+        var sql = """
+        SELECT COUNT(phone)
+        FROM customers
+        WHERE phone = @Phone
+        """;
+        var parameters = new
+        {
+            Phone = phone
+        };
+        using var conn = connFactory.CustomerConnect();
+        var result = await conn.ExecuteScalarAsync<int>(sql, parameters);
+        return result;
+    }
+
     public async Task DeleteAsync(Guid id)
     {
         var sql = """
