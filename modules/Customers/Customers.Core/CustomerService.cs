@@ -81,7 +81,7 @@ public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _
         if (count > 0)
         {
             _logger.LogWarning("phone {Phone} already exists", phone);
-            throw new BadRequestException("Phone already exists");
+            throw new ConflictException("Phone already exists");
         }
     }
     private async Task IdExistsAsync(Guid id)
