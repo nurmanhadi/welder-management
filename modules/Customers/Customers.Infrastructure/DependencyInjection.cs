@@ -25,4 +25,11 @@ public static class DependencyInjection
         services.AddScoped<ICustomerService, CustomerService>();
         return services;
     }
+    public static IServiceCollection AddCustomerMigrations(this IServiceCollection services)
+    {
+        using var scope = services.BuildServiceProvider().CreateScope();
+        var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+        runner.MigrateUp();
+        return services;
+    }
 }
