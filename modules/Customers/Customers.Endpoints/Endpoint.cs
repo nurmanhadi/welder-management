@@ -50,7 +50,8 @@ public static class Endpoint
                     Data: new ResponseCustomerDto(result.Id, result.Name, result.Phone, result.Address)));
         })
         .Produces<ApiResponse<ResponseCustomerDto>>(201)
-        .Produces<ApiResponse<string>>(400);
+        .Produces<ApiResponse<string>>(400)
+        .Produces<ApiResponse<string>>(409);
 
         // update customer
         customers.MapPut("/{id}", async (
@@ -74,7 +75,8 @@ public static class Endpoint
         })
         .Produces<ApiResponse<ResponseCustomerDto>>(200)
         .Produces<ApiResponse<string>>(400)
-        .Produces<ApiResponse<string>>(404);
+        .Produces<ApiResponse<string>>(404)
+        .Produces<ApiResponse<string>>(409);
 
         // delete customer
         customers.MapDelete("/{id}", async (
