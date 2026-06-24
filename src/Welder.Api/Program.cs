@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // infrastructure
 builder.Services
-    .AddCustomersInfrastructure(builder.Configuration);
+    .AddCustomersInfrastructure();
 
 // endpoints
 builder.Services
