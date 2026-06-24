@@ -1,13 +1,16 @@
 ﻿using Customers.Core;
 using FluentValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Shared.Responses;
 
 namespace Customers.Endpoints;
 
 public static class Endpoint
 {
-    public static void MapCustomerEndpoints(this WebApplication web)
+    public static void MapCustomerEndpoints(this IEndpointRouteBuilder web)
     {
         var customers = web.MapGroup("/customers").WithTags("Customers");
 

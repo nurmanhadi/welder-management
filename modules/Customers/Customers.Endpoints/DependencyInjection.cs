@@ -1,5 +1,5 @@
-﻿using Customers.Core;
-using FluentValidation;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Customers.Endpoints;
 
