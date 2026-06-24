@@ -40,7 +40,7 @@ public static class ExceptionMiddleware
                 context.Response.StatusCode = 409;
                 await context.Response.WriteAsJsonAsync(new ApiResponse<string>(ex.Message, null));
             }
-            catch (ValidationException ex)
+            catch (ValidatorException ex)
             {
                 context.Response.StatusCode = 422;
                 await context.Response.WriteAsJsonAsync(new ApiResponse<string>(ex.Message, null));

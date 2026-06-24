@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Shared.Exceptions;
 using Shared.Responses;
 
 namespace Customers.Endpoints;
@@ -39,7 +40,7 @@ public static class Endpoint
             var validationResult = await validator.ValidateAsync(dto);
             if (!validationResult.IsValid)
             {
-                throw new ValidationException(validationResult.Errors.First().ToString());
+                throw new ValidatorException(validationResult.Errors.First().ToString());
             }
             var command = new AddCustomerCommand(dto.Name, dto.Phone, dto.Address);
             var result = await customerService.AddAsync(command);
@@ -64,7 +65,7 @@ public static class Endpoint
             var validationResult = await validator.ValidateAsync(dto);
             if (!validationResult.IsValid)
             {
-                throw new ValidationException(validationResult.Errors.First().ToString());
+                throw new ValidatorException(validationResult.Errors.First().ToString());
             }
             var command = new UpdateCustomerCommand(id, dto.Name, dto.Phone, dto.Address);
             var result = await customerService.UpdateAsync(command);
