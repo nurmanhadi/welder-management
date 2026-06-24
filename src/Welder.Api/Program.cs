@@ -1,5 +1,6 @@
 using Customers.Endpoints;
 using Customers.Infrastructure;
+using Shared.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+app.UseExceptionMiddleware();
 app.UseHttpsRedirection();
 
 app.MapCustomerEndpoints();
