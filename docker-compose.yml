@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mariadb:lts-ubi
+    container_name: db
+    hostname: db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: welder
+    volumes:
+      - db_data:/var/lib/mysql/data
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local

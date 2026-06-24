@@ -1,0 +1,24 @@
+# Avoid copying local build artifacts
+**/bin/
+**/obj/
+
+# Source control and IDE metadata
+.git
+.gitignore
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Docker build files
+Dockerfile*
+docker-compose*
+
+# Frontend dependencies (if using Angular, React, etc.)
+**/node_modules/
+**/npm-debug.log
+
+# Logs and secrets
+*.log
+*.env
+secrets.json
