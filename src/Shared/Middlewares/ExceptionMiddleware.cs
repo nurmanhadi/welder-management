@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Shared.Exceptions;
 using Shared.Responses;
 
@@ -11,12 +13,16 @@ public static class ExceptionMiddleware
     {
         app.Use(async (context, next) =>
         {
+            var logger = context.RequestServices
+                    .GetRequiredService<ILoggerFactory>()
+                    .CreateLogger("ExceptionMiddleware");
             try
             {
                 await next();
             }
             catch (BadHttpRequestException ex)
             {
+                logger.LogWarning("{Message}", ex.Message);
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsJsonAsync(new ApiResponse<string>(ex.Message, null));
             }
@@ -27,6 +33,7 @@ public static class ExceptionMiddleware
             }
             catch (UnauthorizedAccessException ex)
             {
+                logger.LogWarning("{Message}", ex.Message);
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsJsonAsync(new ApiResponse<string>(ex.Message, null));
             }
@@ -47,8 +54,9 @@ public static class ExceptionMiddleware
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "internal server error");
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsJsonAsync(new ApiResponse<string>(ex.Message, null));
+                await context.Response.WriteAsJsonAsync(new ApiResponse<string>("internal server error", null));
             }
         });
     }
