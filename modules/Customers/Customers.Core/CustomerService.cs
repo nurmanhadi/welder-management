@@ -61,6 +61,7 @@ public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _
         }
         if (!string.IsNullOrEmpty(command.Phone))
         {
+            await PhoneExistsAsync(command.Phone);
             customer.Phone = command.Phone;
         }
         if (!string.IsNullOrEmpty(command.Address))
