@@ -1,6 +1,6 @@
 services:
   db:
-    image: mariadb:lts-ubi
+    image: mariadb:latest
     container_name: db
     hostname: db
     ports:
