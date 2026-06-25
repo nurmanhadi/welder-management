@@ -5,8 +5,8 @@ namespace Customers.Core;
 public record CustomerFilter(
     int Page,
     int PageSize,
-    CustomerSort Sort = CustomerSort.CreatedAt,
-    Direction Direction = Direction.Descending,
+    CustomerSort Sort,
+    Direction Direction,
     string? Search = null);
 
 public enum CustomerSort
