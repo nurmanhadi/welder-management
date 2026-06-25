@@ -89,7 +89,7 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
         return result;
     }
 
-    public async Task<Pagination<Customer>> GetCustomersAsync(CustomerFilter filter)
+    public async Task<Pagination<Customer>> GetAllAsync(CustomerFilter filter)
     {
         var whereClause = "WHERE deleted_at IS NULL";
         string? searchKeyword = null;
