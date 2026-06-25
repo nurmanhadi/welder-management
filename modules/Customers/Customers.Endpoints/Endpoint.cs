@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Shared.Exceptions;
 using Shared.Responses;
+using Shared.Tools;
 
 namespace Customers.Endpoints;
 
@@ -93,5 +94,25 @@ public static class Endpoint
         })
         .Produces<ApiResponse<string>>(200)
         .Produces<ApiResponse<string>>(404);
+
+        // get all
+        customers.MapGet("/", async (
+            [FromServices] ICustomerService customerService,
+            [FromQuery(Name = "page")] int page = 1,
+            [FromQuery(Name = "size")] int size = 10,
+            [FromQuery(Name = "sort")] Sort sort = Sort.CreatedAt,
+            [FromQuery(Name = "direction")] Direction direction = Direction.Descending,
+            [FromQuery(Name = "s")] string? search = null
+        ) =>
+        {
+            var filter = new CustomerFilter(page, size, (CustomerSort)sort, direction, search);
+            var result = await customerService.GetAllAsync(filter);
+            var contents = result.Contents.Select(x => new ResponseCustomerDto(x.Id, x.Name, x.Phone, x.Address)).ToList().AsReadOnly();
+            return Results.Ok(new ApiResponse<Pagination<ResponseCustomerDto>>(
+                Data: new Pagination<ResponseCustomerDto>(contents, result.Page, result.PageSize, result.TotalItems),
+                Message: "get all customer success"
+            ));
+        })
+        .Produces<ApiResponse<Pagination<ResponseCustomerDto>>>(200);
     }
 }
