@@ -7,13 +7,21 @@ public class CreateTableCustomer : Migration
 {
     public override void Up()
     {
-        Create.Table("customers")
-        .WithColumn("id").AsGuid().PrimaryKey()
-        .WithColumn("name").AsString(100).NotNullable()
-        .WithColumn("phone").AsString(20).Unique().NotNullable()
-        .WithColumn("address").AsString().NotNullable()
-        .WithColumn("created_at").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
-        .WithColumn("deleted_at").AsDateTime().Nullable().WithDefaultValue(null);
+        Execute.Sql("""
+            CREATE TABLE customers (
+                id CHAR(36) PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                phone VARCHAR(20) UNIQUE NOT NULL,
+                address TEXT NOT NULL,
+                search_index TEXT NOT NULL,
+                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                deleted_at TIMESTAMP NULL DEFAULT NULL
+            );
+        """);
+
+        Execute.Sql("""
+            CREATE FULLTEXT INDEX search_index_fts ON customers (search_index);
+        """);
     }
 
     public override void Down()
