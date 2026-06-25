@@ -100,6 +100,10 @@ public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _
     {
         var result = await _db.GetAllAsync(filter);
         var contents = result.Contents.Select(x => new ResponseCustomerCommand(x.Id, x.Name, x.Phone, x.Address)).ToList().AsReadOnly();
+        if (_logger.IsEnabled(LogLevel.Information))
+        {
+            _logger.LogInformation("customer count {Count} retrieved successfully", contents.Count);
+        }
         return new Pagination<ResponseCustomerCommand>(contents, result.Page, result.PageSize, result.TotalItems);
     }
 }
