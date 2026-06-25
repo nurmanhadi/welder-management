@@ -1,3 +1,5 @@
+using Shared.Responses;
+
 namespace Customers.Core;
 
 public interface ICustomerService
@@ -6,4 +8,5 @@ public interface ICustomerService
     Task<ResponseCustomerCommand> AddAsync(AddCustomerCommand command);
     Task<ResponseCustomerCommand> UpdateAsync(UpdateCustomerCommand command);
     Task DeleteAsync(Guid id);
+    Task<Pagination<ResponseCustomerCommand>> GetAllAsync(CustomerFilter filter);
 }

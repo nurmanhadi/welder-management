@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Shared.Exceptions;
+using Shared.Responses;
 
 namespace Customers.Core;
 
@@ -93,5 +94,12 @@ public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _
             _logger.LogWarning("customer {Id} not found", id);
             throw new NotFoundException("Customer not found");
         }
+    }
+
+    public async Task<Pagination<ResponseCustomerCommand>> GetAllAsync(CustomerFilter filter)
+    {
+        var result = await _db.GetAllAsync(filter);
+        var contents = result.Contents.Select(x => new ResponseCustomerCommand(x.Id, x.Name, x.Phone, x.Address)).ToList().AsReadOnly();
+        return new Pagination<ResponseCustomerCommand>(contents, result.Page, result.PageSize, result.TotalItems);
     }
 }
