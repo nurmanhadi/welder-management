@@ -1,4 +1,6 @@
-using Customers.Core;
+using Customers.Core.Contracts;
+using Customers.Core.Entities;
+using Customers.Core.Helpers;
 using Customers.Infrastructure.Data;
 using Dapper;
 using Shared.Responses;

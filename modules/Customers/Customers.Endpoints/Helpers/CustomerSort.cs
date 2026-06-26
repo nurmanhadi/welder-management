@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Customers.Endpoints;
+namespace Customers.Endpoints.Helpers;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Sort

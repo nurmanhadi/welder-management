@@ -1,4 +1,5 @@
 using Customers.Endpoints;
+using Customers.Endpoints.Routers;
 using Customers.Infrastructure;
 using Shared.Middlewares;
 
@@ -27,6 +28,6 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionMiddleware();
 app.UseHttpsRedirection();
 
-app.MapCustomerEndpoints();
+app.MapCustomerRouters();
 
 app.Run();

@@ -1,6 +1,6 @@
 using Shared.Tools;
 
-namespace Customers.Core;
+namespace Customers.Core.Helpers;
 
 public record CustomerFilter(
     int Page,

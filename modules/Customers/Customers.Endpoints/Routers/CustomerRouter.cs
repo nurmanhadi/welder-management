@@ -1,4 +1,8 @@
-﻿using Customers.Core;
+﻿using Customers.Core.Commands;
+using Customers.Core.Contracts;
+using Customers.Core.Helpers;
+using Customers.Endpoints.Dtos;
+using Customers.Endpoints.Helpers;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -8,11 +12,11 @@ using Shared.Exceptions;
 using Shared.Responses;
 using Shared.Tools;
 
-namespace Customers.Endpoints;
+namespace Customers.Endpoints.Routers;
 
-public static class Endpoint
+public static class CustomerRouter
 {
-    public static void MapCustomerEndpoints(this IEndpointRouteBuilder web)
+    public static void MapCustomerRouters(this IEndpointRouteBuilder web)
     {
         var customers = web.MapGroup("/customers").WithTags("Customers");
 

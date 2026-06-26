@@ -1,7 +1,9 @@
+using Customers.Core.Entities;
+using Customers.Core.Helpers;
 using Shared.Abstractions;
 using Shared.Responses;
 
-namespace Customers.Core;
+namespace Customers.Core.Contracts;
 
 public interface ICustomerRepository : IRepository<Customer>
 {

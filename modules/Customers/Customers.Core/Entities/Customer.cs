@@ -1,6 +1,6 @@
 ﻿using Shared.Abstractions;
 
-namespace Customers.Core;
+namespace Customers.Core.Entities;
 
 public class Customer : BaseEntity
 {

@@ -1,7 +1,8 @@
-﻿using Customers.Core;
+﻿using Customers.Core.Contracts;
 using Customers.Infrastructure.Data;
 using Customers.Infrastructure.Data.Migrations;
 using Customers.Infrastructure.Repositories;
+using Customers.Infrastructure.Services;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

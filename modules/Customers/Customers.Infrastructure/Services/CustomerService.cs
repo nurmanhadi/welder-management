@@ -1,12 +1,16 @@
+using Customers.Core.Commands;
+using Customers.Core.Contracts;
+using Customers.Core.Entities;
+using Customers.Core.Helpers;
 using Microsoft.Extensions.Logging;
 using Shared.Exceptions;
 using Shared.Responses;
 
-namespace Customers.Core;
+namespace Customers.Infrastructure.Services;
 
 public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _logger) : ICustomerService
 {
-    public async Task<ResponseCustomerCommand> AddAsync(AddCustomerCommand command)
+    public async Task<CustomerResult> AddAsync(AddCustomerCommand command)
     {
         await PhoneExistsAsync(command.Phone);
         var customer = new Customer
@@ -20,7 +24,7 @@ public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _
         {
             _logger.LogInformation("customer {Name} added successfully", customer.Name);
         }
-        return new ResponseCustomerCommand(customer.Id, customer.Name, customer.Phone, customer.Address);
+        return new CustomerResult(customer.Id, customer.Name, customer.Phone, customer.Address);
     }
 
     public async Task DeleteAsync(Guid id)
@@ -33,7 +37,7 @@ public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _
         }
     }
 
-    public async Task<ResponseCustomerCommand> GetByIdAsync(Guid id)
+    public async Task<CustomerResult> GetByIdAsync(Guid id)
     {
         var customer = await _db.GetByIdAsync(id);
         if (customer == null)
@@ -45,10 +49,10 @@ public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _
         {
             _logger.LogInformation("customer {Id} retrieved successfully", id);
         }
-        return new ResponseCustomerCommand(customer.Id, customer.Name, customer.Phone, customer.Address);
+        return new CustomerResult(customer.Id, customer.Name, customer.Phone, customer.Address);
     }
 
-    public async Task<ResponseCustomerCommand> UpdateAsync(UpdateCustomerCommand command)
+    public async Task<CustomerResult> UpdateAsync(UpdateCustomerCommand command)
     {
         var customer = await _db.GetByIdAsync(command.Id);
         if (customer == null)
@@ -74,7 +78,7 @@ public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _
         {
             _logger.LogInformation("customer {Id} updated successfully", command.Id);
         }
-        return new ResponseCustomerCommand(customer.Id, customer.Name, customer.Phone, customer.Address);
+        return new CustomerResult(customer.Id, customer.Name, customer.Phone, customer.Address);
     }
 
     private async Task PhoneExistsAsync(string phone)
@@ -96,14 +100,14 @@ public class CustomerService(ICustomerRepository _db, ILogger<CustomerService> _
         }
     }
 
-    public async Task<Pagination<ResponseCustomerCommand>> GetAllAsync(CustomerFilter filter)
+    public async Task<Pagination<CustomerResult>> GetAllAsync(CustomerFilter filter)
     {
         var result = await _db.GetAllAsync(filter);
-        var contents = result.Contents.Select(x => new ResponseCustomerCommand(x.Id, x.Name, x.Phone, x.Address)).ToList().AsReadOnly();
+        var contents = result.Contents.Select(x => new CustomerResult(x.Id, x.Name, x.Phone, x.Address)).ToList().AsReadOnly();
         if (_logger.IsEnabled(LogLevel.Information))
         {
             _logger.LogInformation("customer count {Count} retrieved successfully", contents.Count);
         }
-        return new Pagination<ResponseCustomerCommand>(contents, result.Page, result.PageSize, result.TotalItems);
+        return new Pagination<CustomerResult>(contents, result.Page, result.PageSize, result.TotalItems);
     }
 }
