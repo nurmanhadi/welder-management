@@ -35,7 +35,7 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
         var sql = """
         SELECT COUNT(id)
         FROM customers
-        WHERE id = @Id
+        WHERE deleted_at IS NULL AND id = @Id
         """;
         var parameters = new DynamicParameters();
         parameters.Add("Id", id);
@@ -80,7 +80,7 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
         var sql = """
         SELECT id, name, phone, address
         FROM customers
-        WHERE id = @Id
+        WHERE deleted_at IS NULL AND id = @Id
         """;
         var parameters = new DynamicParameters();
         parameters.Add("Id", id);
@@ -149,6 +149,7 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
         parameters.Add("Phone", entity.Phone);
         parameters.Add("Address", entity.Address);
         parameters.Add("SearchIndex", searchIndex);
+        parameters.Add("Id", entity.Id);
 
         using var conn = connFactory.CustomerCreateConnection();
         await conn.ExecuteAsync(sql, parameters);
