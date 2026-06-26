@@ -10,17 +10,20 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
 {
     public async Task AddAsync(Customer entity)
     {
+        var keyword = $"{entity.Name} {entity.Phone}";
+        var searchIndex = keyword.ToNgram();
         var sql = """
-        INSERT INTO customers (id, name, phone, address)
-        VALUES (@Id, @Name, @Phone, @Address)
+        INSERT INTO customers (id, name, phone, address, search_index)
+        VALUES (@Id, @Name, @Phone, @Address, @SearchIndex)
         """;
-        var parameters = new
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-            Phone = entity.Phone,
-            Address = entity.Address,
-        };
+
+        var parameters = new DynamicParameters();
+        parameters.Add("Id", entity.Id);
+        parameters.Add("Name", entity.Name);
+        parameters.Add("Phone", entity.Phone);
+        parameters.Add("Address", entity.Address);
+        parameters.Add("SearchIndex", searchIndex);
+
         using var conn = connFactory.CustomerCreateConnection();
         await conn.ExecuteAsync(sql, parameters);
     }
@@ -32,10 +35,9 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
         FROM customers
         WHERE id = @Id
         """;
-        var parameters = new
-        {
-            Id = id
-        };
+        var parameters = new DynamicParameters();
+        parameters.Add("Id", id);
+
         using var conn = connFactory.CustomerCreateConnection();
         var result = await conn.ExecuteScalarAsync<int>(sql, parameters);
         return result;
@@ -48,10 +50,9 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
         FROM customers
         WHERE phone = @Phone
         """;
-        var parameters = new
-        {
-            Phone = phone
-        };
+        var parameters = new DynamicParameters();
+        parameters.Add("Phone", phone);
+
         using var conn = connFactory.CustomerCreateConnection();
         var result = await conn.ExecuteScalarAsync<int>(sql, parameters);
         return result;
@@ -64,11 +65,10 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
         SET deleted_at = @DeletedAt
         WHERE id = @Id
         """;
-        var parameters = new
-        {
-            DeletedAt = DateTime.UtcNow,
-            Id = id
-        };
+        var parameters = new DynamicParameters();
+        parameters.Add("DeletedAt", DateTime.UtcNow);
+        parameters.Add("Id", id);
+
         using var conn = connFactory.CustomerCreateConnection();
         await conn.ExecuteAsync(sql, parameters);
     }
@@ -80,10 +80,9 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
         FROM customers
         WHERE id = @Id
         """;
-        var parameters = new
-        {
-            Id = id
-        };
+        var parameters = new DynamicParameters();
+        parameters.Add("Id", id);
+
         using var conn = connFactory.CustomerCreateConnection();
         var result = await conn.QueryFirstOrDefaultAsync<Customer>(sql, parameters);
         return result;
@@ -136,18 +135,19 @@ public class CustomerRepository(ICustomerConnectionFactory connFactory) : ICusto
 
     public async Task UpdateAsync(Customer entity)
     {
+        var keyword = $"{entity.Name} {entity.Phone}";
+        var searchIndex = keyword.ToNgram();
         var sql = """
         UPDATE customers
-        SET name = @Name, phone = @Phone, address = @Address
+        SET name = @Name, phone = @Phone, address = @Address, search_index = @SearchIndex
         WHERE id = @Id
         """;
-        var parameters = new
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-            Phone = entity.Phone,
-            Address = entity.Address,
-        };
+        var parameters = new DynamicParameters();
+        parameters.Add("Name", entity.Name);
+        parameters.Add("Phone", entity.Phone);
+        parameters.Add("Address", entity.Address);
+        parameters.Add("SearchIndex", searchIndex);
+
         using var conn = connFactory.CustomerCreateConnection();
         await conn.ExecuteAsync(sql, parameters);
     }
