@@ -3,7 +3,7 @@ using Projects.Core.Helpers;
 namespace Projects.Core.Commands;
 
 public record CreateProjectCommand(
-    string CustomerId,
+    Guid CustomerId,
     string Title,
     string Description,
     decimal Cost,
