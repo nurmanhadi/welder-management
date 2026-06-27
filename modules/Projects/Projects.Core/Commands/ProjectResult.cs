@@ -11,5 +11,5 @@ public record ProjectResult(
     ProjectStatus ProjectStatus,
     DateTime? StartDate,
     DateTime? EndDate,
-    CustomerInfo CustomerInfo
+    CustomerInfo Customer
 );
