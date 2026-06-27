@@ -12,7 +12,7 @@ public class CreateTableProject : Migration
                 id CHAR(36) PRIMARY KEY,
                 pid VARCHAR(20) UNIQUE NOT NULL,
                 customer_id CHAR(36) NOT NULL,
-                title VARCHAR(20) UNIQUE NOT NULL,
+                title VARCHAR(20) NOT NULL,
                 description TEXT NOT NULL,
                 cost DECIMAL(10,2) NOT NULL,
                 status ENUM('Draft', 'Survey', 'Negotiation', 'Approved', 'InProgres', 'Finished', 'Cencelled') NOT NULL,
