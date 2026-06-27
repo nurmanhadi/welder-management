@@ -9,7 +9,7 @@ public record ProjectResult(
     string Description,
     decimal Cost,
     ProjectStatus ProjectStatus,
-    DateTime StartDate,
-    DateTime EndDate,
+    DateTime? StartDate,
+    DateTime? EndDate,
     CustomerInfo CustomerInfo
 );

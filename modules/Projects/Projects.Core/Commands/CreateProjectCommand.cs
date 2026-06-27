@@ -6,7 +6,5 @@ public record CreateProjectCommand(
     Guid CustomerId,
     string Title,
     string Description,
-    decimal Cost,
-    DateTime StartDate,
-    DateTime EndDate
+    decimal Cost
 );

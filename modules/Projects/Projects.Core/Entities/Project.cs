@@ -11,6 +11,6 @@ public class Project : BaseEntity
     public string Description { get; set; } = string.Empty;
     public decimal Cost { get; set; }
     public ProjectStatus Status { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
 }
