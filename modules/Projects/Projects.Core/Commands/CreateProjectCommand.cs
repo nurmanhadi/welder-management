@@ -7,7 +7,6 @@ public record CreateProjectCommand(
     string Title,
     string Description,
     decimal Cost,
-    ProjectStatus ProjectStatus,
     DateTime StartDate,
     DateTime EndDate
 );
