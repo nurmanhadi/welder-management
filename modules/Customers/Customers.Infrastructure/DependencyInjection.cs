@@ -1,7 +1,9 @@
-﻿using Customers.Core.Contracts;
+﻿using Customers.Client.Contracts;
+using Customers.Core.Contracts;
 using Customers.Infrastructure.Data;
 using Customers.Infrastructure.Data.Migrations;
 using Customers.Infrastructure.Repositories;
+using Customers.Infrastructure.Rpc;
 using Customers.Infrastructure.Services;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +26,7 @@ public static class DependencyInjection
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<ICustomerClient, CustomerRpcClient>();
         return services;
     }
     public static IServiceCollection AddCustomerMigrations(this IServiceCollection services)
