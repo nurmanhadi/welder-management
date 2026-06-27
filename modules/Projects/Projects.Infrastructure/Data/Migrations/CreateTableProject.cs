@@ -16,8 +16,8 @@ public class CreateTableProject : Migration
                 description TEXT NOT NULL,
                 cost DECIMAL(10,2) NOT NULL,
                 status ENUM('Draft', 'Survey', 'Negotiation', 'Approved', 'InProgres', 'Finished', 'Cencelled') NOT NULL,
-                start_date DATE NOT NULL,
-                end_date DATE NOT NULL,
+                start_date DATE NULL DEFAULT NULL,
+                end_date DATE NULL DEFAULT NULL,
                 search_index TEXT NOT NULL,
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 deleted_at TIMESTAMP NULL DEFAULT NULL
