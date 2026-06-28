@@ -1,19 +1,5 @@
 <Solution>
-  <Folder Name="/modules/" />
-  <Folder Name="/modules/Customers/">
-    <Project Path="modules/Customers/Customers.Client/Customers.Client.csproj" />
-    <Project Path="modules/Customers/Customers.Core/Customers.Core.csproj" />
-    <Project Path="modules/Customers/Customers.Endpoints/Customers.Endpoints.csproj" />
-    <Project Path="modules/Customers/Customers.Infrastructure/Customers.Infrastructure.csproj" />
-  </Folder>
-  <Folder Name="/modules/Projects/">
-    <Project Path="modules/Projects/Projects.Client/Projects.Client.csproj" />
-    <Project Path="modules/Projects/Projects.Core/Projects.Core.csproj" />
-    <Project Path="modules/Projects/Projects.Endpoints/Projects.Endpoints.csproj" />
-    <Project Path="modules/Projects/Projects.Infrastructure/Projects.Infrastructure.csproj" />
-  </Folder>
   <Folder Name="/src/">
-    <Project Path="src/Shared/Shared.csproj" />
-    <Project Path="src/Welder.Api/Welder.Api.csproj" />
+    <Project Path="src/WelderManagement/WelderManagement.csproj" />
   </Folder>
 </Solution>
