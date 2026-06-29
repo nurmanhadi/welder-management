@@ -13,7 +13,7 @@ public class ProjectRepository(IConnectionFactory _db) : IProjectRepository
         var sql = """
         SELECT COUNT(id)
         FROM projects
-        WHERE deleted_at IS NULL AND id = $Id
+        WHERE deleted_at IS NULL AND id = @Id
         """;
         var parameters = new DynamicParameters();
         parameters.Add("Id", id);
@@ -27,7 +27,7 @@ public class ProjectRepository(IConnectionFactory _db) : IProjectRepository
     {
         var sql = """
         UPDATE projects SET deleted_at = @DeletedAt
-        WHERE id = $Id
+        WHERE id = @Id
         """;
         var parameters = new DynamicParameters();
         parameters.Add("DeletedAt", DateTime.UtcNow);
@@ -40,9 +40,18 @@ public class ProjectRepository(IConnectionFactory _db) : IProjectRepository
     public async Task<Project?> GetByIdAsync(Guid id)
     {
         var sql = """
-        SELECT id, pid, customer_id, title, description, cost, status, start_date, end_date
+        SELECT
+            id AS Id,
+            pid AS PID,
+            customer_id AS CustomerId,
+            title AS Title,
+            description AS Description,
+            cost AS Cost,
+            status AS Status,
+            start_date AS StartDate,
+            end_date AS EndDate
         FROM projects
-        WHERE deleted_at IS NULL AND id = $Id
+        WHERE deleted_at IS NULL AND id = @Id
         """;
         var parameters = new DynamicParameters();
         parameters.Add("Id", id);
@@ -79,7 +88,14 @@ public class ProjectRepository(IConnectionFactory _db) : IProjectRepository
         var keyword = $"{entity.PID} {entity.Title}";
         var searchIndex = keyword.ToNgram();
         var sql = """
-        UPDATE projects SET title = @Title, description = @Description, cost = @Cost, status = @Status, search_index = @SearchIndex
+        UPDATE projects SET
+            title = @Title,
+            description = @Description,
+            cost = @Cost,
+            status = @Status,
+            start_date = @StartDate,
+            end_date = @EndDate,
+            search_index = @SearchIndex
         WHERE id = @Id
         """;
         var parameters = new DynamicParameters();
@@ -87,6 +103,8 @@ public class ProjectRepository(IConnectionFactory _db) : IProjectRepository
         parameters.Add("Description", entity.Description);
         parameters.Add("Cost", entity.Cost);
         parameters.Add("Status", entity.Status);
+        parameters.Add("StartDate", entity.StartDate);
+        parameters.Add("EndDate", entity.EndDate);
         parameters.Add("SearchIndex", searchIndex);
         parameters.Add("Id", entity.Id);
 
